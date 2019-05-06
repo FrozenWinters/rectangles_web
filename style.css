@@ -5,7 +5,6 @@ html{
 }
 
 #top{
-  height: 600px;
   width: 100%
 }
 
@@ -17,6 +16,14 @@ html{
   background-color: #f4f7f6;
 }
 
+#control {
+  z-index: 5;
+  height : 200px;
+  width : 450px;
+  border: 1px solid 	#000000;
+  background-color: #FFEBCD;
+}
+
 .rect {
   z-index: 2;
   border: 1px solid 	#000000;
@@ -26,10 +33,10 @@ html{
 
 .point {
   z-index: 3;
-  height : 10px;
-  width : 10px;
+  height : 8px;
+  width : 8px;
   border-radius: 50%;
-  border: 1px solid #B0C4DE;
+  border: 1px solid #000000;
   background-color: #7FFF00;
   position: absolute;
 }
@@ -40,9 +47,28 @@ div.active {
 }
 
 .center{
-  position: absolute;
-  top: 50%;
+  position: relative;
+  margin:auto;
+  margin-top: 20px;
+  /*top: 50%;
   left: 50%;
   display: inline-block;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);*/
+}
+
+p.title{
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: .051em;
+  font-size: 1.5em;
+  margin-top: 0px;
+  font-family: "OFL Sorts Mill Goudy", "Noto Nastaliq Urdu", "My Noto Nastaliq Urdu", Georgia, serif;
+}
+
+p{
+  font-size: 1.156em;
+  line-height: 0.6;
+  margin-left: 0px;
+  margin-left: 10px;
+  font-family: "Gill Sans MT", "Gill Sans", "My Gill Sans", sans-serif
 }
