@@ -18,8 +18,7 @@ html{
 
 #control {
   z-index: 5;
-  height : 200px;
-  width : 450px;
+  width : 300px;
   border: 1px solid 	#000000;
   background-color: #FFEBCD;
 }
@@ -58,10 +57,9 @@ div.active {
 
 p.title{
   text-transform: uppercase;
-  text-align: center;
   letter-spacing: .051em;
-  font-size: 1.5em;
-  margin-top: 0px;
+  font-size: 1.6em;
+  margin-top: 5px;
   font-family: "OFL Sorts Mill Goudy", "Noto Nastaliq Urdu", "My Noto Nastaliq Urdu", Georgia, serif;
 }
 
@@ -69,6 +67,7 @@ p{
   font-size: 1.156em;
   line-height: 0.6;
   margin-left: 0px;
-  margin-left: 10px;
+
+  text-align: center;
   font-family: "Gill Sans MT", "Gill Sans", "My Gill Sans", sans-serif
 }
