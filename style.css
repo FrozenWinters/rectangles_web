@@ -1,0 +1,39 @@
+/* what is this? */
+body {
+  background-color: #1a1a1a;
+  position: relative;
+}
+
+#top{
+  height: 600px;
+  width: 100%
+}
+
+#square {
+  height : 300px;
+  width : 300px;
+  border-radius: 50%;
+  border:3px solid #ffffff;
+  background-color: #008B8B;
+}
+
+.point {
+  height : 10px;
+  width : 10px;
+  border-radius: 50%;
+  border:3px solid #ffffff;
+  background-color: #7FFF00;
+  position: absolute;
+}
+
+div.active {
+  background-color: #DC143C;
+}
+
+.center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: inline-block;
+  transform: translate(-50%, -50%);
+}
