@@ -7,10 +7,10 @@
 
     $(this).addClass('active');
 
-    var rect = active_pt.getBoundingClientRect();
+    var bounds = active_pt.getBoundingClientRect();
 
-    point.active_x = e.pageX - rect.left + 1; // 3 is the margin size
-    point.active_y = e.pageY - rect.bottom - 1;
+    point.active_x = e.pageX - bounds.left + 1;
+    point.active_y = e.pageY - bounds.bottom - 1;
 
     $(document).on("mousemove", function (e){
       e.preventDefault();
@@ -21,10 +21,10 @@
     });
   },
   moveHandler = function(e, point){
-    var square = point.parent.get(0).getBoundingClientRect();
+    var bounds = point.parent.get(0).getBoundingClientRect();
 
-    var x = e.pageX - square.left - point.active_x,
-    y = square.bottom - e.pageY + point.active_y;
+    var x = e.pageX - bounds.left - point.active_x,
+    y = bounds.bottom - e.pageY + point.active_y;
 
 
     if(x - point.origin_x < 0){
@@ -59,13 +59,15 @@
     point.active_y = null;
   };
 
-  function addPointToDOM(point, x, y){
-    var tip = $('<div id="' + point.name + '" class="point"> </div>').css({
+  function addPointToDOM(x, y){
+    var self = this;
+
+    var tip = $('<div id="' + this.name + '_tip" class="point"> </div>').css({
       'left' : x - BUTTON_SIZE + 'px',
       'bottom' : y - BUTTON_SIZE + 'px'
     });
 
-    var area = $('<div id="rect_' + point.name + '" class="rect"> </div>').css({
+    var area = $('<div id="' + this.name + '_rect" class="rect"> </div>').css({
       'height' : 0 + 'px',
       'width' : 0 + 'px',
       'left' : x - 1 + 'px',
@@ -75,24 +77,40 @@
     tip.on("mousedown", function (e){
       e.preventDefault();
       e.stopPropagation();
-      startHandler.call(this, e, point);
+      startHandler.call(this, e, self);
     });
 
     area.on("mousedown", function (e){
+      //This exists so that clicking a shaded rectangle dosen't trigger point placment
       e.preventDefault();
       e.stopPropagation();
     });
 
-    point.parent.append(tip);
-    point.parent.append(area);
+    this.parent.append(tip);
+    this.parent.append(area);
 
-    point.area = $('#rect_' + point.name).get(0);
+    this.tip = $('#' + this.name + '_tip').get(0);
+    this.area = $('#' + this.name + '_rect').get(0);
+  }
+
+  function removePointFromDOM(){
+    this.parent.remove(this.tip);
+    this.parent.remove(this.area);
+    this.tip = this.area = this.origin_x = this.origin_y = this.name = null;
+  }
+
+  function reset(){
+    this.area.style.width = 0;
+    this.area.style.height = 0;
+    this.tip.style.left = this.origin_x;
+    this.tip.style.bottom = this.origin_y;
   }
 
   function Point(name, parent_id, x, y){
     this.parent = $('#' + parent_id);
     this.name = name;
 
+    this.tip = null;
     this.area = null;
 
     this.origin_x = x - BUTTON_SIZE;
@@ -101,31 +119,15 @@
     //These is where an active element was originally clicked
     this.active_x = null;
     this.active_y = null;
-    addPointToDOM(this, x, y);
+    this.addPointToDOM(x, y);
   }
 
   Point.prototype = {
-		constructor: Point
+		constructor: Point,
+    addPointToDOM: addPointToDOM,
+    removePointFromDOM: removePointFromDOM,
+    reset: reset
 	};
 
   window.Point = Point;
 } (jQuery, window, document));
-
-;(function(){
-  var counter = 1;
-
-  var addHandler = function(e){
-    var square = this.getBoundingClientRect();
-    new Point('pt' + counter, this.id, e.pageX - square.left, square.bottom - e.pageY);
-    counter++;
-  }
-
-  $(document).ready(function() {
-    new Point('pt0', 'square', 0, 0);
-    $('#square').on('mousedown', function (e){
-      e.stopPropagation();
-      e.preventDefault();
-      addHandler.call(this, e);
-    });
-  });
-}());
