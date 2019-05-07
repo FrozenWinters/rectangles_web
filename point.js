@@ -60,7 +60,7 @@
   };
 
   function addPointToDOM(x, y){
-    var self = this;
+    let self = this;
 
     var tip = $('<div id="' + this.name + '_tip" class="point"> </div>').css({
       'left' : x - BUTTON_SIZE + 'px',
@@ -94,16 +94,16 @@
   }
 
   function removePointFromDOM(){
-    this.parent.remove(this.tip);
-    this.parent.remove(this.area);
+    $(this.tip).remove();
+    $(this.area).remove();
     this.tip = this.area = this.origin_x = this.origin_y = this.name = null;
   }
 
   function reset(){
-    this.area.style.width = 0;
-    this.area.style.height = 0;
-    this.tip.style.left = this.origin_x;
-    this.tip.style.bottom = this.origin_y;
+    this.area.style.width = 0 + 'px';
+    this.area.style.height = 0 + 'px';
+    this.tip.style.left = this.origin_x + 'px';
+    this.tip.style.bottom = this.origin_y + 'px';
   }
 
   function Point(name, parent_id, x, y){

@@ -50,6 +50,15 @@ div.active {
   margin-top: 20px;
 }
 
+p{
+  font-size: 1.156em;
+  line-height: 0.6;
+  margin-left: 0px;
+
+  text-align: center;
+  font-family: "Gill Sans MT", "Gill Sans", "My Gill Sans", sans-serif
+}
+
 p.title{
   text-transform: uppercase;
   letter-spacing: .051em;
@@ -58,11 +67,8 @@ p.title{
   font-family: "OFL Sorts Mill Goudy", "Noto Nastaliq Urdu", "My Noto Nastaliq Urdu", Georgia, serif;
 }
 
-p{
-  font-size: 1.156em;
-  line-height: 0.6;
-  margin-left: 0px;
-
-  text-align: center;
-  font-family: "Gill Sans MT", "Gill Sans", "My Gill Sans", sans-serif
+a.button{
+   color: #696969;
+   text-decoration:underline;
+   cursor: pointer;
 }

@@ -9,7 +9,7 @@
 
   function rectReset(){
     this.origin.reset();
-    for (let point of points) {
+    for (let point of this.points) {
       point.reset();
     };
   }
@@ -17,10 +17,10 @@
   function popLast(){
     var point = this.points.pop();
     if(point === void 0){
+      return false;
+    } else{
       point.removePointFromDOM();
       return true;
-    } else{
-      return false;
     }
   }
 
@@ -30,7 +30,7 @@
   }
 
   function togglePlacment(){
-    var self = this;
+    let self = this;
     if(this.placment){
       this.container.off('mousedown');
     } else{
