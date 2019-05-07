@@ -43,6 +43,14 @@
     this.placment = !this.placment;
   }
 
+  function computeArea(){
+    var area = this.origin.area;
+    for (let point of this.points) {
+      area += point.area;
+    };
+    return area;
+  }
+
   function Square(id){
     this.self = this;
     this.name = id;
@@ -58,7 +66,8 @@
     rectReset: rectReset,
     popLast: popLast,
     hardReset: hardReset,
-    togglePlacment: togglePlacment
+    togglePlacment: togglePlacment,
+    computeArea: computeArea
 	};
 
   window.Square = Square;

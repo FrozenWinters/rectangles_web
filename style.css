@@ -1,10 +1,17 @@
 html{
   background-color: #A9A9A9;
   position: relative;
+  user-select: none;
 }
 
 #top{
   width: 100%
+}
+
+#info{
+  width : 500px;
+  border: 1px solid 	#000000;
+  background-color: #FFA07A;
 }
 
 .square {
@@ -16,7 +23,6 @@ html{
 }
 
 .control {
-  z-index: 5;
   width : 300px;
   border: 1px solid 	#000000;
   background-color: #FFEBCD;
@@ -47,16 +53,21 @@ div.active {
 .center{
   position: relative;
   margin:auto;
-  margin-top: 20px;
+  margin-top: 40px;
+  margin-bottom: -25px;
 }
 
 p{
   font-size: 1.156em;
   line-height: 0.6;
-  margin-left: 0px;
-
   text-align: center;
   font-family: "Gill Sans MT", "Gill Sans", "My Gill Sans", sans-serif
+}
+
+p.left{
+  margin-left: 7px;
+  line-height: 1;
+  text-align: left;
 }
 
 p.title{

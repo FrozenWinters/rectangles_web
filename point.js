@@ -1,3 +1,10 @@
+/*
+ * Let's take a momment to repeat our daily mantra:
+ * HOLLY FORKING SHIRT BALLS
+ * MANDATORY USE OF THE THIS KEYWORD IN JAVASCRIPT
+ * IS FORKING IDIOTIC
+*/
+
 ;(function ($, window, document) {
   var BUTTON_SIZE = 6;
   var SQUARE_LEN = 500 - BUTTON_SIZE;
@@ -26,32 +33,11 @@
     var x = e.pageX - bounds.left - point.active_x,
     y = bounds.bottom - e.pageY + point.active_y;
 
+    point.width = (x - point.origin_x < 0) ? 0 : ((x <= SQUARE_LEN) ? x - point.origin_x : SQUARE_LEN - point.origin_x);
+    point.height = (y - point.origin_y < 0) ? 0 : ((y <= SQUARE_LEN) ? y - point.origin_y : SQUARE_LEN - point.origin_y);
 
-    if(x - point.origin_x < 0){
-      this.style.left = point.origin_x + 'px';
-      point.area.style.width = 0;
-    } else
-    if(x <= SQUARE_LEN){
-      this.style.left = x + 'px';
-      point.area.style.width = (x - point.origin_x) + 'px';
-    } else{
-      this.style.left = SQUARE_LEN + 'px';
-      point.area.style.width = (SQUARE_LEN - point.origin_x) + 'px';
-    }
-
-    if(y - point.origin_y < 0){
-      this.style.bottom = point.origin_y + 'px';
-      point.area.style.height = 0;
-    } else
-    if(y <= SQUARE_LEN){
-      this.style.bottom = y + 'px';
-      point.area.style.height = (y - point.origin_y) + 'px';
-    } else{
-      this.style.bottom = SQUARE_LEN + 'px';
-      point.area.style.height = (SQUARE_LEN - point.origin_y) + 'px';
-    }
+    point.udpateSides();
   },
-
   endHandler = function(e, point){
     $(this).removeClass('active');
     $(document).off("mousemove");
@@ -67,7 +53,7 @@
       'bottom' : y - BUTTON_SIZE + 'px'
     });
 
-    var area = $('<div id="' + this.name + '_rect" class="rect"> </div>').css({
+    var body = $('<div id="' + this.name + '_rect" class="rect"> </div>').css({
       'height' : 0 + 'px',
       'width' : 0 + 'px',
       'left' : x - 1 + 'px',
@@ -80,41 +66,52 @@
       startHandler.call(this, e, self);
     });
 
-    area.on("mousedown", function (e){
+    body.on("mousedown", function (e){
       //This exists so that clicking a shaded rectangle dosen't trigger point placment
       e.preventDefault();
       e.stopPropagation();
     });
 
     this.parent.append(tip);
-    this.parent.append(area);
+    this.parent.append(body);
 
     this.tip = $('#' + this.name + '_tip').get(0);
-    this.area = $('#' + this.name + '_rect').get(0);
+    this.body = $('#' + this.name + '_rect').get(0);
   }
 
   function removePointFromDOM(){
     $(this.tip).remove();
-    $(this.area).remove();
-    this.tip = this.area = this.origin_x = this.origin_y = this.name = null;
+    $(this.body).remove();
+    this.tip = this.body = this.origin_x = this.origin_y = this.name = null;
+  }
+
+  function udpateSides(){
+    this.body.style.width = this.width + 'px';
+    this.body.style.height = this.height + 'px';
+    this.tip.style.left = (this.origin_x + this.width) + 'px';
+    this.tip.style.bottom = (this.origin_y + this.height) + 'px';
+    this.area = this.height * this.width / (500 * 500);
   }
 
   function reset(){
-    this.area.style.width = 0 + 'px';
-    this.area.style.height = 0 + 'px';
-    this.tip.style.left = this.origin_x + 'px';
-    this.tip.style.bottom = this.origin_y + 'px';
+    this.width = this.height = 0;
+    this.udpateSides();
   }
 
   function Point(name, parent_id, x, y){
     this.parent = $('#' + parent_id);
     this.name = name;
 
+    this.area = 0.0;
+
     this.tip = null;
-    this.area = null;
+    this.body = null;
 
     this.origin_x = x - BUTTON_SIZE;
     this.origin_y = y - BUTTON_SIZE;
+
+    this.width = 0;
+    this.height = 0;
 
     //These is where an active element was originally clicked
     this.active_x = null;
@@ -126,7 +123,8 @@
 		constructor: Point,
     addPointToDOM: addPointToDOM,
     removePointFromDOM: removePointFromDOM,
-    reset: reset
+    reset: reset,
+    udpateSides: udpateSides
 	};
 
   window.Point = Point;

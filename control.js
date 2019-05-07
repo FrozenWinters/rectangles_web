@@ -10,8 +10,11 @@
       + '<p id="reset_rect"></p>'
       + '<p id="reset_all"></p>'
       + '<br />'
-      + '<p> Area Usage: 0 </p>')
+      + '<p id="area_button"></p>'
+      + '<p id="area_display">&#8709</p>')
     );
+
+    this.area_field = $('#area_display');
 
     var toggle = $('<a class="button">ON</a>');
     toggle.on("click", function (e){
@@ -40,6 +43,12 @@
     $('#reset_all').append(
       $('<a class="button"> Reset Everything </a>').on("click", function (e){
         self.square.hardReset();
+      })
+    );
+
+    $('#area_button').append(
+      $('<a class="button"> Compute Area </a>').on("click", function (e){
+        self.area_field.html(self.square.computeArea().toFixed(6));
       })
     );
   };
